@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import matplotlib
+matplotlib.use("Agg")  # Use non-GUI backend
 import matplotlib.pyplot as plt
 
 st.title("Personal Expense Tracker")
