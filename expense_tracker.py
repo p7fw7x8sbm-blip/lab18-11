@@ -38,11 +38,11 @@ if not st.session_state.expenses.empty:
   st.write(f"Total Spent: ${total_spent:.2f}")
 
 # Chart
-category_totals = st.session_state.expenses.groupby('Category')['Amount'].sum()   # group data based on criteria eg. category 
+  category_totals = st.session_state.expenses.groupby('Category')['Amount'].sum()   # group data based on criteria eg. category 
 
 # NOT IN EXAM
-fig, ax = plt.subplot(figsize = (10,6))
-ax.pie(category_totals.values, labels=category_totals.index, autopct='%1.1f%%')
-ax.set_title("Expenses by Category")
-st.pyplot(fig)
+  fig, ax = plt.subplot(figsize = (10,6))
+  ax.pie(category_totals.values, labels=category_totals.index, autopct='%1.1f%%')
+  ax.set_title("Expenses by Category")
+  st.pyplot(fig)
   
