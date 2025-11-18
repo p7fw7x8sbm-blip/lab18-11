@@ -1,48 +1,45 @@
-import streamlit as py
+import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
 st.title("Personal Expense Tracker")
 
-# Initilaize 
+# Initialize
 if 'expenses' not in st.session_state:
-  st.session_state.expenses = pd.Dataframe(columns=['Date','Category','Amount','Description'])
+    st.session_state.expenses = pd.DataFrame(columns=['Date', 'Category', 'Amount', 'Description'])
 
-# Create sth
+# Create form
 with st.form("expense_form"):
     st.subheader("Add New Expense")
     date = st.date_input("Date")
-    category = st.selectbox("Category",["Food","Transport","Entertainment","Bills","Other"]) 
+    category = st.selectbox("Category", ["Food", "Transport", "Entertainment", "Bills", "Other"])
     amount = st.number_input("Amount", min_value=0.0, step=0.01)
     description = st.text_input("Description")
 
     submitted = st.form_submit_button("Add Expense")
 
-# Error handling 
+    # Error handling
     if submitted:
-      new_expense = pd.Dataframe({
-        'Date': [date],
-        'Category': [category],
-        'AMount': [amount],
-        'Description': [description]
-      })
-      st.session_state.expenses = pd.concat([st.session_state.expenses, new_expense], ignore_index=True)
-      st.success("Expense added successfully!")
+        new_expense = pd.DataFrame({
+            'Date': [date],
+            'Category': [category],
+            'Amount': [amount],     # corrected key name
+            'Description': [description]
+        })
+        st.session_state.expenses = pd.concat(
+            [st.session_state.expenses, new_expense],
+            ignore_index=True
+        )
+        st.success("Expense added successfully!")
 
+# Display data
 if not st.session_state.expenses.empty:
-  st.subheader("Your Expenses")
-  st.dataframe(st.session_state.expenses)
-  
-  st.subheader("Summary")
-  total_spent = st.session_state.expenses['Amount'].sum()  # Python method
-  st.write(f"Total Spent: ${total_spent:.2f}")
+    st.subheader("Your Expenses")
+    st.dataframe(st.session_state.expenses)
 
-# Chart
-  category_totals = st.session_state.expenses.groupby('Category')['Amount'].sum()   # group data based on criteria eg. category 
+    st.subheader("Summary")
+    total_spent = st.session_state.expenses['Amount'].sum()
+    st.write(f"Total Spent: ${total_spent:.2f}")
 
-# NOT IN EXAM
-  fig, ax = plt.subplot(figsize = (10,6))
-  ax.pie(category_totals.values, labels=category_totals.index, autopct='%1.1f%%')
-  ax.set_title("Expenses by Category")
-  st.pyplot(fig)
-  
+    # Chart
+    category_totals = st.session_state.expenses.groupby('Category')['Amount'].sum
