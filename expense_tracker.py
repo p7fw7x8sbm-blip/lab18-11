@@ -41,10 +41,11 @@ if not st.session_state.expenses.empty:
     total_spent = st.session_state.expenses['Amount'].sum()
     st.write(f"Total Spent: ${total_spent:.2f}")
 
-    # Chart
-    category_totals = st.session_state.expenses.groupby('Category')['Amount'].sum()
-
+    # Plotting the pie chart
+    category_totals = st.session_state.expenses.groupby('Category')['Amount'].sum()  # Corrected sum() call
+    
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.pie(category_totals.values, labels = category_totals.index, autopct = '%1.1f%')
+    ax.pie(category_totals.values, labels=category_totals.index, autopct='%1.1f%%')
     ax.set_title("Expense by Category")
     st.pyplot(fig)
+
