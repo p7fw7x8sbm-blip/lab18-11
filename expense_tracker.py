@@ -41,7 +41,7 @@ if not st.session_state.expenses.empty:
     total_spent = st.session_state.expenses['Amount'].sum()
     st.write(f"Total Spent: ${total_spent:.2f}")
 
-    # Plotting the pie chart
+    # Plotting the pie chart, NOT IN EXAM
     category_totals = st.session_state.expenses.groupby('Category')['Amount'].sum()  # Corrected sum() call
     
     fig, ax = plt.subplots(figsize=(10, 6))
